@@ -27,8 +27,10 @@ public class CustomerRepositoryTests {
 	@Test
 	public void saveAndFindByEmail() {
 		Customer c = new Customer("Alice", "Smith", "alice@example.com");
-		customerRepository.save(c);
-
+		
+		Customer saved = customerRepository.save(c);
+		assertThat(saved.getId()).isNotNull();
+		
 		Optional<Customer> found = customerRepository.findByEmail("alice@example.com");
 		assertThat(found).isPresent();
 		assertThat(found.get().getEmail()).isEqualTo("alice@example.com");
