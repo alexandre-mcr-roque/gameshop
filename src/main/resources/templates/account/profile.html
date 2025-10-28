@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GameShop - Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <div class="container">
+	    <a class="navbar-brand" th:href="@{/}">GameShop</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav ms-auto">
+	        <!-- Show email linked to profile when user is authenticated -->
+	        <li class="nav-item" th:if="${currentUser != null}"><a class="nav-link active" th:href="@{/profile}" th:text="${currentUser}"></a></li>
+	        <!-- Show Register / Login when not authenticated -->
+	        <li class="nav-item" th:if="${currentUser == null}"><a class="nav-link" th:href="@{/register}">Register</a></li>
+	        <li class="nav-item" th:if="${currentUser == null}"><a class="nav-link" th:href="@{/login}">Login</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+	<main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h2 class="card-title mb-0" th:text="'Profile — ' + ${user.username}">Profile</h2>
+                        <small class="text-muted" th:text="${user.email}"></small>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4">Username</dt>
+                            <dd class="col-sm-8" th:text="${user.username}"></dd>
+
+                            <dt class="col-sm-4">First name</dt>
+                            <dd class="col-sm-8" th:text="${user.firstName}"></dd>
+
+                            <dt class="col-sm-4">Last name</dt>
+                            <dd class="col-sm-8" th:text="${user.lastName}"></dd>
+
+                            <dt class="col-sm-4">Email</dt>
+                            <dd class="col-sm-8" th:text="${user.email}"></dd>
+
+                            <dt class="col-sm-4">Date of birth</dt>
+                            <dd class="col-sm-8" th:text="${user.dateOfBirth}"></dd>
+
+                            <dt class="col-sm-4">Phone</dt>
+                            <dd class="col-sm-8" th:text="${user.phoneNumber}"></dd>
+                        </dl>
+                    </div>
+                    <div class="card-footer bg-white d-flex justify-content-between">
+                        <a th:href="@{/profile/edit}" class="btn btn-outline-secondary">Edit profile</a>
+
+                        <form th:action="@{/logout}" method="post" class="m-0">
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<!-- Note the change from ${name} to ${model.name}
+		 ('model' is the model name, can be changed with the ModelAttribute annotation
+		  if no model name is set, it defaults to the class name (in this case, greetingModel) ) -->
+    <p th:text="|Hello, ${model.name}!|" />
+	<p>You can change who I am greeting by adding the query parameter 'name'!</p>
+	<div th:object="${m2}">
+	    <!-- Note the use of * instead of $ when grabbing the name.
+             This is because we are inside a <th:object> block. 
+             https://www.thymeleaf.org/doc/tutorials/3.1/usingthymeleaf.html#expressions-on-selections-asterisk-syntax -->	
+		<p th:text="|This view has a second model with a different name: *{name}|" />
+	</div>
+</body>
+</html>

@@ -1,5 +1,8 @@
 package demo.gameshop.entities;
 
+import java.time.LocalDate;
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 
 import lombok.Getter;
@@ -13,13 +16,24 @@ public class Customer {
 	private @Getter @Setter String firstName;
 	private @Getter @Setter String lastName;
 	private @Getter @Setter String email;
+	private @Getter @Setter LocalDate dateOfBirth;
+	private @Getter Set<String> roles = Set.of();
 	
 	public Customer() {}
 	
-	public Customer(String firstName, String lastName, String email) {
+	public Customer(String firstName, String lastName, String email, LocalDate dateOfBirth) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.dateOfBirth = dateOfBirth;
+	}
+	
+	public Customer(String firstName, String lastName, String email, LocalDate dateOfBirth, String... roles) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.dateOfBirth = dateOfBirth;
+		this.roles = Set.of(roles);
 	}
 	
 	// Print customer details
