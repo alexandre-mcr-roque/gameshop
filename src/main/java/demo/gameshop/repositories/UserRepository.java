@@ -10,4 +10,5 @@ import demo.gameshop.entities.User;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 	public Optional<User> findByUsername(String username);
+	public Optional<User> findByEmail(String email);
 }

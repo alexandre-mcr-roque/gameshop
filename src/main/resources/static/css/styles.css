@@ -1,0 +1,41 @@
+hr.navbar-collapse-divider-sm, hr.navbar-collapse-divider-md, hr.navbar-collapse-divider-lg,
+  hr.navbar-collapse-divider-xl, hr.navbar-collapse-divider-xxl {
+  display: block !important;
+  margin-top: .5rem !important;
+  margin-bottom: .5rem !important;
+}
+
+/* sm and above breakpoint */
+@media ( min-width : 576px) {
+  hr.navbar-collapse-divider-sm {
+    display: none !important;
+  }
+}
+
+/* md and above breakpoint */
+@media ( min-width : 768px) {
+  hr.navbar-collapse-divider-md {
+    display: none !important;
+  }
+}
+
+/* lg and above breakpoint */
+@media ( min-width : 992px) {
+  hr.navbar-collapse-divider-lg {
+    display: none !important;
+  }
+}
+
+/* xl and above breakpoint */
+@media ( min-width : 1200px) {
+  hr.navbar-collapse-divider-xl {
+    display: none !important;
+  }
+}
+
+/* xxl and above breakpoint */
+@media ( min-width : 1400px) {
+  hr.navbar-collapse-divider-xxl {
+    display: none !important;
+  }
+}

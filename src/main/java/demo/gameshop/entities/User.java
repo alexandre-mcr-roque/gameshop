@@ -1,5 +1,7 @@
 package demo.gameshop.entities;
 
+import static lombok.AccessLevel.NONE;
+
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Set;
@@ -7,33 +9,37 @@ import java.util.TreeSet;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+@Document
 @Getter
 @Setter
 public class User {
 	
 	@Id
-	@Setter(AccessLevel.NONE)
+	@Setter(NONE)
 	private String id;
 	
 	@Indexed(unique = true)
-	@Setter(AccessLevel.NONE)
+	@Setter(NONE)
 	private String username;
+	
+	@Indexed(unique = true)
+	@Setter(NONE)
+	private String email;
 	
 	private String password;
 	
-	@Setter(AccessLevel.NONE)
+	@Setter(NONE)
 	private Set<String> roles;
 	
 	private String firstName;
 	private String lastName;
-	private String email;
 	private LocalDate dateOfBirth;
 	private String phoneNumber;
 	private String address;
@@ -49,14 +55,16 @@ public class User {
 		this.roles = Set.of();
 	}
 	
-	public User(String username, String password) {
+	public User(String username, String email, String password) {
 		this.username = username;
+		this.email = email;
 		this.password = password;
 		this.roles = Set.of();
 	}
 	
-	public User(String username, String password, String... roles) {
+	public User(String username, String email, String password, String... roles) {
 		this.username = username;
+		this.email = email;
 		this.password = password;
 		this.roles = Set.of(roles);
 	}

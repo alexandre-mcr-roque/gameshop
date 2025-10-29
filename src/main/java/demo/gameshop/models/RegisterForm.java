@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import lombok.Setter;
 public class RegisterForm implements NewPasswordForm {
     @NotBlank
     @Size(min = 3, max = 50)
-    @Size(min = 3, max = 50)
+    @Pattern(regexp = "^[a-zA-Z0-9-]+$")
     private String username;
 
     @NotBlank

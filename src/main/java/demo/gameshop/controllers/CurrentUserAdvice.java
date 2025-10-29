@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class CurrentUserAdvice {
 	
@@ -14,5 +16,10 @@ public class CurrentUserAdvice {
             return null;
         }
         return userDetails.getUsername();
+    }
+    
+    @ModelAttribute("isAdmin")
+    public boolean userIsAdmin(HttpServletRequest request) {
+    	return request.isUserInRole("ROLE_ADMIN");
     }
 }
