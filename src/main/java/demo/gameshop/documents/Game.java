@@ -1,4 +1,4 @@
-package demo.gameshop.entities;
+package demo.gameshop.documents;
 
 import static lombok.AccessLevel.NONE;
 
@@ -28,6 +28,10 @@ public class Game {
 	private String nameNormalized;
 	
 	private String name;
+	
+	private String genre;
+	
+	private String imageUrl;
 	
 	public Game()
 	{}

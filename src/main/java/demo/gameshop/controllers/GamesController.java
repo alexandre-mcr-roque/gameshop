@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import demo.gameshop.entities.Game;
+import demo.gameshop.documents.Game;
+import demo.gameshop.models.GameDetails;
 import demo.gameshop.repositories.GameRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -36,9 +37,9 @@ public class GamesController {
 			@PathVariable("name-normalized") String name,
 			Model model) {
 		// (get game from normalized name)
+		Game game = new Game();
 		
-		// (store values in model)
-		
+		model.addAttribute("game", GameDetails.fromDocument(game));
 		return () -> "games/detail";
 	}
 }

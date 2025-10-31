@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
-import demo.gameshop.entities.Game;
+import demo.gameshop.documents.Game;
 import demo.gameshop.repositories.GameRepository;
 
 @DataMongoTest

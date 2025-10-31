@@ -1,4 +1,4 @@
-package demo.gameshop.entities;
+package demo.gameshop.documents;
 
 import static lombok.AccessLevel.NONE;
 

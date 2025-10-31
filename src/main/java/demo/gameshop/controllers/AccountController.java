@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.validation.BindingResult;
 
-import demo.gameshop.entities.User;
+import demo.gameshop.documents.User;
 import demo.gameshop.models.LoginForm;
 import demo.gameshop.models.RegisterForm;
 import demo.gameshop.repositories.UserRepository;

@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import demo.gameshop.entities.User;
+import demo.gameshop.documents.User;
 import demo.gameshop.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 
