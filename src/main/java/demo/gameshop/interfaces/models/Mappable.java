@@ -1,5 +1,7 @@
 package demo.gameshop.interfaces.models;
 
+import java.util.function.Function;
+
 import lombok.NonNull;
 
 /**
@@ -13,7 +15,7 @@ import lombok.NonNull;
  * @param <D> The document/source type
  * @param <M> The model type that implements this interface
  */
-public interface Mappable<D, M extends Mappable<D, M>> {
+public interface Mappable<D, M> {
 	/**
 	 * Map values from the provided document into this model (or another model instance)
 	 * and return the mapped model.

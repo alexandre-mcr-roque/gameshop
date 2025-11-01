@@ -62,7 +62,7 @@
             <td>
               <div class="d-flex align-items-center">
                 <div class="me-3" style="width:48px; height:48px; overflow:hidden; border-radius:6px;">
-                  <img th:if="${game.imageUrl != null}" th:src="${game.imageUrl}" alt="cover" style="width:100%; height:100%; object-fit:cover;" />
+                  <img th:if="${game.imageUrl != null}" th:src="${game.imageUrl}" alt="cover" class="img-cover" />
                   <div th:if="${game.imageUrl == null}" class="bg-secondary text-white d-flex align-items-center justify-content-center" style="width:48px; height:48px;">
                     N/A
                   </div>

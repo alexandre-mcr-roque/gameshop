@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/games")
 @RequiredArgsConstructor
-public class GamesController {
+public class GameController {
 
 	private final GameRepository gameRepository;
 	

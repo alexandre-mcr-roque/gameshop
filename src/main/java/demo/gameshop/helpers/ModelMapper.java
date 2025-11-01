@@ -22,7 +22,6 @@ public final class ModelMapper {
     }
 
     public static <D, M extends Mappable<D, M>> List<M> fromDocuments(Stream<D> docs, Supplier<M> supplier) {
-        M model = supplier.get();
-    	return docs.map(model::mapper).toList();
+    	return docs.map(d -> supplier.get().mapper(d)).toList();
     }
 }

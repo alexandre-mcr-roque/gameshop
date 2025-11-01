@@ -5,6 +5,12 @@ hr.navbar-collapse-divider-sm, hr.navbar-collapse-divider-md, hr.navbar-collapse
   margin-bottom: .5rem !important;
 }
 
+img.img-cover {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 /* sm and above breakpoint */
 @media ( min-width : 576px) {
   hr.navbar-collapse-divider-sm {
