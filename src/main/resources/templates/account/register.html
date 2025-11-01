@@ -50,8 +50,6 @@
               th:text="${error}"></div>
             <form th:action="@{/register}" th:object="${registerForm}"
               method="post">
-              <input type="hidden" th:name="${_csrf.parameterName}"
-                th:value="${_csrf.token}" />
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="username" class="form-label">Username</label>

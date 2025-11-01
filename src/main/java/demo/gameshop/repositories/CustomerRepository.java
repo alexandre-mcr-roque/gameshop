@@ -10,7 +10,7 @@ import demo.gameshop.documents.Customer;
 
 @Repository
 public interface CustomerRepository extends MongoRepository<Customer, String> {
-	public List<Customer> findByFirstName(String firstName);
-	public List<Customer> findByLastName(String lastName);
-	public Optional<Customer> findByEmail(String email);
+	List<Customer> findByFirstName(String firstName);
+	List<Customer> findByLastName(String lastName);
+	Optional<Customer> findByEmail(String email);
 }

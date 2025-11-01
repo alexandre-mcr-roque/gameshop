@@ -25,16 +25,25 @@ public class User {
 	@Setter(NONE)
 	private String id;
 	
+	/**
+	 * This field is set on constructor
+	 */
 	@Indexed(unique = true)
 	@Setter(NONE)
 	private String username;
 	
+	/**
+	 * This field is set on constructor
+	 */
 	@Indexed(unique = true)
 	@Setter(NONE)
 	private String email;
 	
 	private String password;
 	
+	/**
+	 * This field is set on constructor
+	 */
 	@Setter(NONE)
 	private Set<String> roles;
 	
@@ -51,9 +60,10 @@ public class User {
 //	private boolean credentialsExpired;
 //	private boolean accountLocked;
 
-	public User() {
-		this.roles = Set.of();
-	}
+	/** @deprecated Repository requires constructor with no arguments to work. */
+	@SuppressWarnings("unused")
+	private User()
+	{}
 	
 	public User(String username, String email, String password) {
 		this.username = username;

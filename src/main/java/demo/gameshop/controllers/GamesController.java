@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import demo.gameshop.documents.Game;
+import demo.gameshop.helpers.ModelMapper;
 import demo.gameshop.models.GameDetails;
 import demo.gameshop.repositories.GameRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,20 +27,20 @@ public class GamesController {
 	@GetMapping
 	public Callable<String> listGames(Model model) {
 		List<Game> games = gameRepository.findAll();
-		model.addAttribute(games);
+		model.addAttribute(ModelMapper.fromDocuments(games, GameDetails::new));
 		return () -> "games/list";
 	}
 
 	// TODO : Implement game detail display logic and view
 	// (view found in resources/templates/games/detail.html)
-	@GetMapping("/{name-normalized}")
+	@GetMapping("/{title}")
 	public Callable<String> displayGame(
-			@PathVariable("name-normalized") String name,
+			@PathVariable("title") String titleNormalized,
 			Model model) {
 		// (get game from normalized name)
-		Game game = new Game();
+		Game game = new Game("Test Game");
 		
-		model.addAttribute("game", GameDetails.fromDocument(game));
+		model.addAttribute("game", ModelMapper.fromDocument(game, GameDetails::new));
 		return () -> "games/detail";
 	}
 }

@@ -14,11 +14,11 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
-public class EqualsValidatorTests {
+public class PasswordsMatchValidatorTests {
 
     private final Validator validator;
 
-    public EqualsValidatorTests() {
+    public PasswordsMatchValidatorTests() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         this.validator = factory.getValidator();
     }

@@ -9,5 +9,5 @@ import demo.gameshop.documents.Game;
 
 @Repository
 public interface GameRepository extends MongoRepository<Game, String> {
-	public Optional<Game> findByNameNormalized(String nameNormalized);
+	Optional<Game> findByTitleNormalized(String titleNormalized);
 }

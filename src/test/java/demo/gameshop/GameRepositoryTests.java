@@ -6,11 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import demo.gameshop.documents.Game;
 import demo.gameshop.repositories.GameRepository;
 
 @DataMongoTest
+@ActiveProfiles(profiles = {"test"})
 public class GameRepositoryTests {
 	
 	@Autowired
@@ -26,36 +28,36 @@ public class GameRepositoryTests {
 	//  updated normalized name already exists)
 	
 	@Test
-	public void testNameNormalizer() {
-		String normalizedName = Game.normalizeName("Test Game");
-		assertThat(normalizedName).isEqualTo("test-game");
+	public void testTitleNormalizer() {
+		String normalizedTitle = Game.normalizeTitle("Test Game");
+		assertThat(normalizedTitle).isEqualTo("test-game");
 		
-		normalizedName = Game.normalizeName("Test_Game-2!?");
-		assertThat(normalizedName).isEqualTo("test-game-2");
+		normalizedTitle = Game.normalizeTitle("Test_Game-2!?");
+		assertThat(normalizedTitle).isEqualTo("test-game-2");
 		
-		normalizedName = Game.normalizeName("Tést Gãme");
-		assertThat(normalizedName).isEqualTo("test-game");
+		normalizedTitle = Game.normalizeTitle("Tést Gãme");
+		assertThat(normalizedTitle).isEqualTo("test-game");
 		
-		normalizedName = Game.normalizeName("Test&Game");
-		assertThat(normalizedName).isEqualTo("test-and-game");
-		normalizedName = Game.normalizeName("Test & Game");
-		assertThat(normalizedName).isEqualTo("test-and-game");
+		normalizedTitle = Game.normalizeTitle("Test&Game");
+		assertThat(normalizedTitle).isEqualTo("test-and-game");
+		normalizedTitle = Game.normalizeTitle("Test & Game");
+		assertThat(normalizedTitle).isEqualTo("test-and-game");
 
-		normalizedName = Game.normalizeName("    Test Game");
-		assertThat(normalizedName).isEqualTo("test-game");
-		normalizedName = Game.normalizeName("Test Game			");
-		assertThat(normalizedName).isEqualTo("test-game");
-		normalizedName = Game.normalizeName("     Test\nGame			");
-		assertThat(normalizedName).isEqualTo("test-game");
+		normalizedTitle = Game.normalizeTitle("    Test Game");
+		assertThat(normalizedTitle).isEqualTo("test-game");
+		normalizedTitle = Game.normalizeTitle("Test Game			");
+		assertThat(normalizedTitle).isEqualTo("test-game");
+		normalizedTitle = Game.normalizeTitle("     Test\nGame			");
+		assertThat(normalizedTitle).isEqualTo("test-game");
 		
-		normalizedName = Game.normalizeName("Test+Game!\"@#$€^~*¨'?+/\\[](){}");
-		assertThat(normalizedName).isEqualTo("test-plus-game-plus");
-		normalizedName = Game.normalizeName("Test+Game!\"@#$€^~*¨&'?&+/\\[](){}");
-		assertThat(normalizedName).isEqualTo("test-plus-game-and-and-plus");
+		normalizedTitle = Game.normalizeTitle("Test+Game!\"@#$€^~*¨'?+/\\[](){}");
+		assertThat(normalizedTitle).isEqualTo("test-plus-game-plus");
+		normalizedTitle = Game.normalizeTitle("Test+Game!\"@#$€^~*¨&'?&+/\\[](){}");
+		assertThat(normalizedTitle).isEqualTo("test-plus-game-and-and-plus");
 		
-		normalizedName = Game.normalizeName("Alex's Test");
-		assertThat(normalizedName).isEqualTo("alex-s-test");
-		normalizedName = Game.normalizeName("Alex´s Test");
-		assertThat(normalizedName).isEqualTo("alex-s-test");
+		normalizedTitle = Game.normalizeTitle("Alex's Test");
+		assertThat(normalizedTitle).isEqualTo("alex-s-test");
+		normalizedTitle = Game.normalizeTitle("Alex´s Test");
+		assertThat(normalizedTitle).isEqualTo("alex-s-test");
 	}
 }

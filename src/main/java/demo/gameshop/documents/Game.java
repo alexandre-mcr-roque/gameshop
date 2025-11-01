@@ -22,23 +22,26 @@ public class Game {
 	private String id;
 
 	/**
-	 * This field should be set programatically
+	 * This field is set on constructor
 	 */
 	@Indexed(unique = true)
-	private String nameNormalized;
+	@Setter(NONE)
+	private String titleNormalized;
 	
-	private String name;
+	private String title;
 	
 	private String genre;
 	
 	private String imageUrl;
 	
-	public Game()
+	/** @deprecated Repository requires constructor with no arguments to work. */
+	@SuppressWarnings("unused")
+	private Game()
 	{}
 	
-	public Game(String name) {
-		this.name = name;
-		this.nameNormalized = normalizeName(name);
+	public Game(String title) {
+		this.title = title;
+		this.titleNormalized = normalizeTitle(title);
 	}
 
 	private static final Pattern AND_PATTERN = Pattern.compile("&+");
@@ -46,7 +49,7 @@ public class Game {
 	private static final Pattern REMOVE_PATTERN = Pattern.compile("[^\\w\\s-_']+");
 	private static final Pattern SPACE_PATTERN = Pattern.compile("[\\s-_']+");
 	private static final Pattern TRIM_PATTERN = Pattern.compile("(?:^-+|-+$)+");
-	public static String normalizeName(String name) {
+	public static String normalizeTitle(String name) {
 		String result = StringUtils.stripAccents(name).toLowerCase();
 		result = AND_PATTERN.matcher(result).replaceAll(" and ");
 		result = PLUS_PATTERN.matcher(result).replaceAll(" plus ");
