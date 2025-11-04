@@ -1,6 +1,7 @@
 package demo.gameshop;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import java.util.List;
@@ -93,7 +94,7 @@ public class ModelMapperTests {
 		}
 		// Should throw NullPointerException
 		gamesArr[SIZE / 2] = null;
-		assertThrowsExactly(NullPointerException.class,
-				() -> ModelMapper.fromDocuments(gamesArr, GameDetails::new));
+		assertThatExceptionOfType(NullPointerException.class)
+			.isThrownBy(() -> ModelMapper.fromDocuments(gamesArr, GameDetails::new));
 	}
 }

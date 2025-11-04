@@ -12,16 +12,16 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-@Documented
-@Constraint(validatedBy = PasswordsMatch.PasswordsMatchValidator.class)
-@Target({ TYPE_USE })
-@Retention(RUNTIME)
 /**
- * Custom annotation to validate that {@code password} and {@code confirmPassword} fields match
+ * Annotation to validate that {@code password} and {@code confirmPassword} fields match
  * in classes implementing {@link NewPasswordForm}.
  * 
  * @see NewPasswordForm
  */
+@Documented
+@Constraint(validatedBy = PasswordsMatch.PasswordsMatchValidator.class)
+@Target({ TYPE_USE })
+@Retention(RUNTIME)
 public @interface PasswordsMatch {
 	String message() default "Passwords do not match";
 
@@ -41,11 +41,6 @@ public @interface PasswordsMatch {
 
 		@Override
 		public boolean isValid(NewPasswordForm value, ConstraintValidatorContext context) {
-			// If the value is null, it's invalid for our use-case
-			if (value == null) {
-				throw new IllegalArgumentException("NewPasswordForm object cannot be null");
-			}
-
 			// If the runtime class has its own @PasswordsMatch declaration and
 			// the annotation instance on that class is different from the one
 			// this validator was initialized with, skip this invocation so the

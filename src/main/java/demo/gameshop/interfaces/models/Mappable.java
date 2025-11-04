@@ -1,7 +1,5 @@
 package demo.gameshop.interfaces.models;
 
-import java.util.function.Function;
-
 import lombok.NonNull;
 
 /**
