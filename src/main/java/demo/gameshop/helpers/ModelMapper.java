@@ -9,8 +9,8 @@ import demo.gameshop.interfaces.models.Mappable;
 public final class ModelMapper {
     private ModelMapper() {}
 
-    public static <D, M extends Mappable<D, M>> M fromDocument(D doc, Supplier<M> supplier) {
-        return supplier.get().mapper(doc);
+	public static <D, M extends Mappable<D, M>> M fromDocument(D doc, Supplier<M> supplier) {
+        return (M) supplier.get().mapper(doc);
     }
 
     public static <D, M extends Mappable<D, M>> List<M> fromDocuments(D[] docs, Supplier<M> supplier) {

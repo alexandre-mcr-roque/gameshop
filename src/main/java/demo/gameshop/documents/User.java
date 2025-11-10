@@ -40,11 +40,6 @@ public class User {
 	private String email;
 	
 	private String password;
-	
-	/**
-	 * This field is set on constructor
-	 */
-	@Setter(NONE)
 	private Set<String> roles;
 	
 	private String firstName;
@@ -52,6 +47,13 @@ public class User {
 	private LocalDate dateOfBirth;
 	private String phoneNumber;
 	private String address;
+	
+	/**
+	 * This field is set on constructor
+	 * The values are the ids of game reviews
+	 */
+	@Setter(NONE)
+	private Set<String> reviews;
 
 	private boolean disabled;
 
@@ -65,11 +67,11 @@ public class User {
 	private User()
 	{}
 	
+	/**
+	 * Creates a user with the role "USER"
+	 */
 	public User(String username, String email, String password) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.roles = Set.of();
+		this(username, email, password, "USER");
 	}
 	
 	public User(String username, String email, String password, String... roles) {
@@ -77,12 +79,29 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.roles = Set.of(roles);
+		this.reviews = Set.of();
+	}
+	
+	public User(String username, String email, String password, Set<String> roles) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.roles = Collections.unmodifiableSet(roles);
+		this.reviews = Set.of();
+	}
+
+	/**
+	 * Sets the roles to the user.
+	 * @param roles The roles to set
+	 */
+	public void setRoles(Set<String> roles) {
+		this.roles = Collections.unmodifiableSet(roles);
 	}
 	
 	/**
 	 * Add a role to the user. Duplicates are ignored and assumes the role is valid.
-	 * @param role the role to add
-	 * @return this User
+	 * @param role The role to add
+	 * @return This User
 	 */
 	public User addRole(String role) {
 		Set<String> mutableRoles = new TreeSet<>(this.roles);
@@ -93,8 +112,8 @@ public class User {
 	
 	/**
 	 * Add multiple roles to the user. Duplicates are ignored and assumes the roles are valid.
-	 * @param roles the roles to add
-	 * @return this User
+	 * @param roles The roles to add
+	 * @return This User
 	 */
 	public User addRoles(String... roles) {
 		Set<String> mutableRoles = new TreeSet<>(this.roles);
@@ -108,8 +127,8 @@ public class User {
 	/**
 	 * Remove a role from the user. If the user does not have the role, nothing happens.<br>
 	 * If the user only has one role, an exception is thrown.
-	 * @param role the role to remove
-	 * @return this User
+	 * @param role The role to remove
+	 * @return This User
 	 */
 	public User removeRole(String role) {
 		Assert.isTrue(this.roles.size() > 1, "User must have at least one role.");
@@ -121,8 +140,8 @@ public class User {
 	/**
 	 * Remove multiple roles from the user. If the user does not have a role, it is ignored.<br>
 	 * If removing the roles would leave the user with no roles, an exception is thrown. This does not account for duplicate parameters or non-existing roles in the list.
-	 * @param roles the roles to remove
-	 * @return this User
+	 * @param roles The roles to remove
+	 * @return This User
 	 */
 	public User removeRoles(String... roles) {
 		Assert.isTrue(this.roles.size() > roles.length, "User must have at least one role.");
@@ -131,6 +150,20 @@ public class User {
 			mutableRoles.remove(role);
 		}
 		this.roles = Collections.unmodifiableSet(mutableRoles);
+		return this;
+	}
+	
+	public User addReview(String reviewId) {
+		TreeSet<String> mutableReviews = new TreeSet<>(this.reviews);
+		mutableReviews.add(reviewId);
+		this.reviews = Collections.unmodifiableSet(mutableReviews);
+		return this;
+	}
+	
+	public User removeReview(String reviewId) {
+		TreeSet<String> mutableReviews = new TreeSet<>(this.reviews);
+		mutableReviews.remove(reviewId);
+		this.reviews = Collections.unmodifiableSet(mutableReviews);
 		return this;
 	}
 	

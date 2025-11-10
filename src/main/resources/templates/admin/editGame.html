@@ -38,7 +38,7 @@
 
     <div class="card">
       <div class="card-body">
-        <form th:action="@{/admin/games/edit/{title}(title=${gameForm.titleNormalized})}" th:object="${gameForm}" enctype="multipart/form-data" method="post">
+        <form th:action="@{/admin/games/edit/{id}(id=${gameForm.id})}" th:object="${gameForm}" enctype="multipart/form-data" method="post">
           <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input id="title" type="text" class="form-control" th:field="*{title}" placeholder="Enter game title" required />
@@ -73,6 +73,7 @@
             </div>
           </div>
 
+          <input id="titleNormalized" type="hidden" class="form-control" th:field="*{titleNormalized}" />
           <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-primary me-2">Save</button>
             <a th:href="@{/admin/games}" class="btn btn-outline-secondary">Back</a>

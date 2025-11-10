@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class UserDetails implements Mappable<User, UserDetails> {
 	
+	private String id;
 	private String username;
 	private String email;
 	
@@ -22,11 +23,22 @@ public class UserDetails implements Mappable<User, UserDetails> {
 	private LocalDate dateOfBirth;
 	private String phoneNumber;
 	private String address;
+	
+	// Unused for now
+	private String imageUrl;
 
 	private boolean disabled;
 
+	public String getInitials() {
+		return new StringBuilder(2)
+				.append(this.firstName.charAt(0))
+				.append(this.lastName.charAt(0))
+				.toString().toUpperCase();
+	}
+	
 	@Override
 	public UserDetails mapper(User doc) {
+		this.id = doc.getId();
 		this.username = doc.getUsername();
 		this.email = doc.getEmail();
 		this.roles = doc.getRoles();

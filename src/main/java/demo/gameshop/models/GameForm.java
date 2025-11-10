@@ -8,18 +8,19 @@ import demo.gameshop.interfaces.models.Mappable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class GameForm implements Mappable<Game, GameForm> {
-	// TODO : Validation annotations
+	private String id;
 	
 	@NotBlank
 	@Size(min = 3, max = 100)
 	private String title;
-	
-	// Set programatically
+
+	/** Set programatically */
 	private String titleNormalized;
 	
 	@NotBlank
@@ -31,9 +32,10 @@ public class GameForm implements Mappable<Game, GameForm> {
 	
 	@FileValidation(max = "32MB")
 	private MultipartFile imageFile;
-	
+
 	@Override
-	public GameForm mapper(Game doc) {
+	public GameForm mapper(@NonNull Game doc) {
+		this.id = doc.getId();
 		this.title = doc.getTitle();
 		this.titleNormalized = doc.getTitleNormalized();
 		this.genre = doc.getGenre();

@@ -26,9 +26,11 @@ public class GameController {
 	// (view found in resources/templates/games/list.html)
 	@GetMapping
 	public Callable<String> listGames(Model model) {
-		List<Game> games = gameRepository.findAll();
-		model.addAttribute(ModelMapper.fromDocuments(games, GameDetails::new));
-		return () -> "games/list";
+		return () -> {
+			List<Game> games = gameRepository.findAll();
+			model.addAttribute(ModelMapper.fromDocuments(games, GameDetails::new));
+			return "games/list";
+		};
 	}
 
 	// TODO : Implement game detail display logic and view
@@ -37,10 +39,12 @@ public class GameController {
 	public Callable<String> displayGame(
 			@PathVariable("title") String titleNormalized,
 			Model model) {
-		// (get game from normalized name)
-		Game game = new Game("Test Game");
-		
-		model.addAttribute("game", ModelMapper.fromDocument(game, GameDetails::new));
-		return () -> "games/detail";
+		return () -> {
+			// (get game from normalized name)
+			Game game = new Game("Test Game");
+			
+			model.addAttribute("game", ModelMapper.fromDocument(game, GameDetails::new));
+			return "games/detail";
+		};
 	}
 }

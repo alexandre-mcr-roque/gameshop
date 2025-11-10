@@ -54,8 +54,7 @@ public class AccountController {
 
 		User user = new User(registerForm.getUsername(),
 							 registerForm.getEmail(),
-							 passwordEncoder.encode(registerForm.getPassword()),
-							 "USER");
+							 passwordEncoder.encode(registerForm.getPassword()));
 		user.setFirstName(registerForm.getFirstName());
 		user.setLastName(registerForm.getLastName());
 		user.setDateOfBirth(registerForm.getDateOfBirth());

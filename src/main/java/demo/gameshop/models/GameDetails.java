@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class GameDetails implements Mappable<Game, GameDetails> {
 	
+	private String id;
 	private String title;
 	private String titleNormalized;
 	private String genre;
@@ -16,7 +17,7 @@ public class GameDetails implements Mappable<Game, GameDetails> {
 
 	@Override
 	public GameDetails mapper(Game doc) {
-		// TODO : Fill fields
+		this.id = doc.getId();
 		this.title = doc.getTitle();
 		this.titleNormalized = doc.getTitleNormalized();
 		this.genre = doc.getGenre();
