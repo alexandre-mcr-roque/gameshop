@@ -28,7 +28,7 @@ public class GameReview {
 	@Setter(NONE)
 	private Map<String, UserGameReview> reviews;
 	
-	/** @deprecated Repository requires constructor with no arguments to work. */
+	/** Repository requires constructor with no arguments to work. */
 	@SuppressWarnings("unused")
 	private GameReview()
 	{}
@@ -91,7 +91,7 @@ public class GameReview {
 	}
 	
 	@Getter
-	private static class UserGameReview {
+	public static class UserGameReview {
 		private String userId;
 		private String username;
 		private String firstName;
@@ -101,5 +101,7 @@ public class GameReview {
 		private String review;
 		private LocalDate reviewDate;
 		private LocalDate editDate;
-	}
+
+        private UserGameReview() {}
+    }
 }

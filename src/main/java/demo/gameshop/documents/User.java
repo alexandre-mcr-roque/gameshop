@@ -62,7 +62,7 @@ public class User {
 //	private boolean credentialsExpired;
 //	private boolean accountLocked;
 
-	/** @deprecated Repository requires constructor with no arguments to work. */
+	/** Repository requires constructor with no arguments to work. */
 	@SuppressWarnings("unused")
 	private User()
 	{}

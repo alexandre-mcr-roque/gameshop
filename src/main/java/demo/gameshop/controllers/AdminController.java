@@ -1,25 +1,5 @@
 package demo.gameshop.controllers;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.Callable;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
-
 import demo.gameshop.documents.Game;
 import demo.gameshop.documents.GameReview;
 import demo.gameshop.documents.User;
@@ -36,6 +16,19 @@ import demo.gameshop.services.FileService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.Callable;
 
 @Controller
 @RequestMapping("/admin")
@@ -179,13 +172,13 @@ public class AdminController {
 		// Check if user exists
 		Optional<User> userOptional = userRepository.findById(id);
 		if (userOptional.isEmpty()) {
-			response.setStatus(HttpStatus.NOT_FOUND.value());
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 		User user = userOptional.get();
 		// Prevent disabling itself
 		if (userDetails.getUsername().equals(user.getUsername())) {
-			response.setStatus(HttpStatus.NOT_FOUND.value());
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 		user.setDisabled(true);
@@ -193,7 +186,7 @@ public class AdminController {
 			userRepository.save(user);
 		}
 		catch (Exception e) {
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -205,13 +198,13 @@ public class AdminController {
 		// Check if user exists
 		Optional<User> userOptional = userRepository.findById(id);
 		if (userOptional.isEmpty()) {
-			response.setStatus(HttpStatus.NOT_FOUND.value());
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 		User user = userOptional.get();
 		// Prevent enabling itself
 		if (userDetails.getUsername().equals(user.getUsername())) {
-			response.setStatus(HttpStatus.NOT_FOUND.value());
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 		user.setDisabled(false);
@@ -219,7 +212,7 @@ public class AdminController {
 			userRepository.save(user);
 		}
 		catch (Exception e) {
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -231,20 +224,20 @@ public class AdminController {
 		// Check if user exists
 		Optional<User> userOptional = userRepository.findById(id);
 		if (userOptional.isEmpty()) {
-			response.setStatus(HttpStatus.NOT_FOUND.value());
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 		User user = userOptional.get();
 		// Prevent deleting itself
 		if (userDetails.getUsername().equals(user.getUsername())) {
-			response.setStatus(HttpStatus.NOT_FOUND.value());
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 		try {
 			userRepository.delete(user);
 		}
 		catch (Exception e) {
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -351,14 +344,14 @@ public class AdminController {
 	public void disableGame(
 			@PathVariable String id,
 			HttpServletResponse response) {
-		response.setStatus(HttpStatus.NOT_IMPLEMENTED.value());
+		response.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
 	}
 	
 	@PostMapping("/games/enable/{id}")
 	public void enableGame(
 			@PathVariable String id,
 			HttpServletResponse response) {
-		response.setStatus(HttpStatus.NOT_IMPLEMENTED.value());
+		response.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
 	}
 	
 	@DeleteMapping("/games/{id}")
@@ -368,7 +361,7 @@ public class AdminController {
 		// Check if game exists
 		Optional<Game> gameOptional = gameRepository.findById(id);
 		if (gameOptional.isEmpty()) {
-			response.setStatus(HttpStatus.NOT_FOUND.value());
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 		Game game = gameOptional.get();
@@ -380,7 +373,7 @@ public class AdminController {
 			gameRepository.delete(game);
 		}
 		catch (Exception e) {
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
 	

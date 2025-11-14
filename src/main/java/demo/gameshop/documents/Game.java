@@ -34,7 +34,7 @@ public class Game {
 	
 	private String imageUrl;
 	
-	/** @deprecated Repository requires constructor with no arguments to work. */
+	/** Repository requires constructor with no arguments to work. */
 	@SuppressWarnings("unused")
 	private Game()
 	{}

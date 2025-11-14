@@ -1,22 +1,16 @@
 package demo.gameshop.controllers;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Optional;
-
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.mongodb.client.gridfs.model.GridFSFile;
-
 import demo.gameshop.services.FileService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/images")
@@ -34,10 +28,11 @@ public class ImageController {
 			Optional<GridFSFile> fileOptional = fileService.findById(id);
 			if (fileOptional.isPresent()) {
 				GridFSFile file = fileOptional.get();
-				String contentType = file.getMetadata().getString("_contentType");
+                assert file.getMetadata() != null;
+                String contentType = file.getMetadata().getString("_contentType");
 				// Send only image files within this controller
 				if (!contentType.startsWith("image/")) {
-					response.setStatus(HttpStatus.NOT_FOUND.value());
+					response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 					return;
 				}
 				response.setStatus(HttpStatus.OK.value());
@@ -50,7 +45,7 @@ public class ImageController {
 				}
 			}
 		} catch (IOException | IllegalStateException e) {
-            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
 		}
 		response.setStatus(HttpStatus.NOT_FOUND.value());

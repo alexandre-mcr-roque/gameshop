@@ -1,88 +1,56 @@
 package demo.gameshop;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Set;
-
+import demo.gameshop.annotations.FileValidation;
+import demo.gameshop.annotations.PasswordsMatch;
+import demo.gameshop.models.NewPasswordForm;
+import jakarta.validation.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.multipart.MultipartFile;
 
-import demo.gameshop.annotations.FileValidation;
-import demo.gameshop.annotations.PasswordsMatch;
-import demo.gameshop.models.NewPasswordForm;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.ValidationException;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ActiveProfiles(profiles = {"test"})
 public class ConstraintValidatorTests {
 	private final Validator validator;
 
 	public ConstraintValidatorTests() {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		this.validator = factory.getValidator();
-	}
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+            this.validator = factory.getValidator();
+        }
+    }
 
-	// Classses that implement the validators
-	private final class TestPasswordForm implements NewPasswordForm {
-		private String password;
-		private String confirmPassword;
-
-		public TestPasswordForm(String password, String confirmPassword) {
-			this.password = password;
-			this.confirmPassword = confirmPassword;
-		}
-
-		@Override public String getPassword() { return this.password; }
-		@Override public String getConfirmPassword() { return this.confirmPassword; }
-	}
+    // Classes that implement the validators
+    private record TestPasswordForm(String password, String confirmPassword) implements NewPasswordForm {
+        @Override public String getPassword() { return this.password; }
+        @Override public String getConfirmPassword() { return this.confirmPassword; }
+    }
 
 	@PasswordsMatch(message = "Test Error Message")
-	private final class TestPasswordFormTwo implements NewPasswordForm {
-		private String password;
-		private String confirmPassword;
-
-		public TestPasswordFormTwo(String password, String confirmPassword) {
-			this.password = password;
-			this.confirmPassword = confirmPassword;
-		}
-
+    private record TestPasswordFormTwo(String password, String confirmPassword) implements NewPasswordForm {
 		@Override public String getPassword() { return this.password; }
 		@Override public String getConfirmPassword() { return this.confirmPassword; }
 	}
 
-	private final class TestMultipartFileForm {
-		@FileValidation // not required, no limit
-		private MultipartFile file1;
 
-		@FileValidation(max = "32KB", message = "Limit is 32KiB") // not required, 32KiB limit
-		private MultipartFile file2;
-		
-		@FileValidation(required = true, max = "128KB", message = "Required and limit is 128KiB") // required, 128KiB limit
-		private MultipartFile file3;
-		
-		public TestMultipartFileForm(MultipartFile file1, MultipartFile file2, MultipartFile file3) {
-			this.file1 = file1;
-			this.file2 = file2;
-			this.file3 = file3;
-		}
-	}
+    private record TestMultipartFileForm(
+            // not required, no limit
+            @FileValidation MultipartFile file1,
+            // not required, 32KiB limit
+            @FileValidation(max = "32KB", message = "Limit is 32KiB") MultipartFile file2,
+            // required, 128KiB limit
+            @FileValidation(required = true, max = "128KB", message = "Required and limit is 128KiB") MultipartFile file3) {}
 	
-	private final class TestMultipartFileForm2 {
+	private static final class TestMultipartFileForm2 {
+        // Should throw an exception on validation
 		@FileValidation(max = "invalid string")
-		private MultipartFile file;
-		
-		public TestMultipartFileForm2() {
-			this.file = new MockMultipartFile("empty.txt", new byte[0]);
-		}
+		private final MultipartFile file = new MockMultipartFile("empty.txt", new byte[0]);
 	}
     
     @Test
@@ -140,7 +108,7 @@ public class ConstraintValidatorTests {
     }
     
     @Test
-    void fileValidationValidatorTests() throws FileNotFoundException, IOException {
+    void fileValidationValidatorTests() throws IOException {
     	// Create used variables
     	TestMultipartFileForm form;
     	MockMultipartFile file;
@@ -171,6 +139,7 @@ public class ConstraintValidatorTests {
     	messageMatch = violations.stream()
     			.anyMatch(v -> "Required and limit is 128KiB".equals(v.getMessage())
     					&& "file3".equals(v.getPropertyPath().toString()));
+        assertThat(messageMatch).isTrue();
     	assertThat(violations.size()).isEqualTo(1);
     	
     	// Test with files (~110KiB)
@@ -181,6 +150,7 @@ public class ConstraintValidatorTests {
     	violations = validator.validate(form);messageMatch = violations.stream()
     			.anyMatch(v -> "Limit is 32KiB".equals(v.getMessage())
     					&& "file2".equals(v.getPropertyPath().toString()));
+        assertThat(messageMatch).isTrue();
     	assertThat(violations.size()).isEqualTo(1);
         
         // Test invalid max file size string in annotation
